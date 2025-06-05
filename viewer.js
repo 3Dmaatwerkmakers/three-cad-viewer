@@ -18,7 +18,7 @@ scene.add(new THREE.AmbientLight(0xffffff, 0.7));
 // 1. Laad het model
 let model;
 const loader = new GLTFLoader();
-loader.load('model.glb', (gltf) => {
+loader.load('iLogicParamExportTest1.glb', (gltf) => {
     model = gltf.scene;
     scene.add(model);
     updateModel(); // eerste keer toepassen
@@ -26,7 +26,7 @@ loader.load('model.glb', (gltf) => {
 
 // 2. Laad de parameters
 let parameters;
-fetch('parameters.json')
+fetch('iLogicParamExportTest1.json')
   .then(res => res.json())
   .then(json => {
     parameters = json;
