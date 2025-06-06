@@ -4,12 +4,32 @@
   <meta charset="UTF-8">
   <title>3D Viewer</title>
   <style>
-    body { margin: 0; overflow: hidden; }
-    #viewer-container { width: 100vw; height: 100vh; }
-    #ui { position: absolute; top: 10px; left: 10px; z-index: 10; }
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #f0f0f0;
+    }
+    h1 {
+      margin: 0;
+      padding: 1rem;
+      background-color: #222;
+      color: white;
+      font-size: 1.5rem;
+    }
+    #viewer-container {
+      width: 100vw;
+      height: calc(100vh - 64px); /* ruimte onder de titel */
+    }
+    #ui {
+      position: absolute;
+      top: 80px;
+      left: 10px;
+      z-index: 10;
+    }
   </style>
 </head>
 <body>
+  <h1>3D config</h1>
   <div id="ui"></div>
   <div id="viewer-container"></div>
   <script type="module" src="viewer.js"></script>
