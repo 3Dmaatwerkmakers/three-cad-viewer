@@ -27,7 +27,7 @@ scene.add(directionalLight);
 
 const loader = new GLTFLoader();
 loader.load(
-  'box.glb',
+  'https://3dmaatwerkmakers.github.io/three-cad-viewer/box.glb',
   (gltf) => {
     const model = gltf.scene;
     scene.add(model);
@@ -53,4 +53,5 @@ function animate() {
   renderer.render(scene, camera);
 }
 animate();
+
 
