@@ -22,12 +22,26 @@ scene.add(light);
 
 // GLTF model laden
 const loader = new GLTFLoader();
-loader.load('box.glb', (gltf) => {
-  const model = gltf.scene;
-  scene.add(model);
-}, undefined, (error) => {
-  console.error('Fout bij laden GLB:', error);
-});
+loader.load('box.glb',
+  (gltf) => {
+    console.log("Model geladen:", gltf);
+    const model = gltf.scene;
+    scene.add(model);
+  },
+  (xhr) => {
+    console.log(`Laden: ${(xhr.loaded / xhr.total * 100).toFixed(2)}%`);
+  },
+  (error) => {
+    console.error("Fout bij laden:", error);
+  }
+);
+
+//loader.load('box.glb', (gltf) => {
+//const model = gltf.scene;
+//scene.add(model);
+//}, undefined, (error) => {
+// console.error('Fout bij laden GLB:', error);
+//});
 
 // Animatielus
 function animate() {
