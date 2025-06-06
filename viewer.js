@@ -48,17 +48,19 @@ function onWindowResize() {
 
 function loadModel() {
   const loader = new GLTFLoader();
-  console.log("Bezig met laden van: box.glb");
+  const path = 'box.glb';
+  console.log("Bezig met laden van:", path);
+  
   loader.load(
-    'box.glb',
+    path,
     function (gltf) {
-      console.log("box.glb geladen!");
+      console.log("model geladen!");
       model = gltf.scene;
       scene.add(model);
     },
     function (xhr) {
       if (xhr.lengthComputable) {
-        console.log(`box.glb laden: ${(xhr.loaded / xhr.total * 100).toFixed(0)}%`);
+        console.log(`model laden: ${(xhr.loaded / xhr.total * 100).toFixed(0)}%`);
       }
     },
     function (error) {
@@ -67,6 +69,7 @@ function loadModel() {
     }
   );
 }
+
 
 function animate() {
   requestAnimationFrame(animate);
