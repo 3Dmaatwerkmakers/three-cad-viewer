@@ -1,85 +1,45 @@
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.154.0/build/three.module.js';
-import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.154.0/examples/jsm/loaders/GLTFLoader.js';
+// viewer.js
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js';
+import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/loaders/GLTFLoader.js';
 
-let scene, camera, renderer, model;
+// Scene setup
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xf0f0f0);
 
-function showError(message) {
-  let ui = document.getElementById('ui');
-  if (ui) {
-    ui.innerHTML = `<span style="color: red; font-weight: bold;">${message}</span>`;
-  } else {
-    alert(message);
-  }
-  console.error(message);
+// Camera
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.set(2, 2, 5);
+
+// Renderer
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// Licht
+const light = new THREE.DirectionalLight(0xffffff, 1);
+light.position.set(5, 10, 7.5);
+scene.add(light);
+
+// GLTF model laden
+const loader = new GLTFLoader();
+loader.load('box.glb', (gltf) => {
+  const model = gltf.scene;
+  scene.add(model);
+}, undefined, (error) => {
+  console.error('Fout bij laden GLB:', error);
+});
+
+// Animatielus
+function animate() {
+  requestAnimationFrame(animate);
+  renderer.render(scene, camera);
 }
+animate();
 
-function initThree() {
-  scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xf8f8f8);
-
-  camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 5000);
-  camera.position.set(0, 0, 1000);
-
-  renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-
-  const container = document.getElementById('viewer-container');
-  if (container) {
-    container.innerHTML = "";
-    container.appendChild(renderer.domElement);
-  } else {
-    document.body.appendChild(renderer.domElement);
-  }
-
-  const light = new THREE.DirectionalLight(0xffffff, 1.2);
-  light.position.set(10, 10, 10);
-  scene.add(light);
-  scene.add(new THREE.AmbientLight(0xffffff, 0.7));
-
-  window.addEventListener('resize', onWindowResize, false);
-}
-
-function onWindowResize() {
-  if (!camera || !renderer) return;
+// Venster-resize ondersteuning
+window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
-}
-
-function loadModel() {
-  const loader = new GLTFLoader();
-  const path = 'box.glb';
-  console.log("Bezig met laden van:", path);
-  
-  loader.load(
-    path,
-    function (gltf) {
-      console.log("model geladen!");
-      model = gltf.scene;
-      scene.add(model);
-    },
-    function (xhr) {
-      if (xhr.lengthComputable) {
-        console.log(`model laden: ${(xhr.loaded / xhr.total * 100).toFixed(0)}%`);
-      }
-    },
-    function (error) {
-      showError("Fout bij laden van box.glb. Bestaat het bestand en is het een geldig glb-bestand?");
-      console.error(error);
-    }
-  );
-}
-
-
-function animate() {
-  requestAnimationFrame(animate);
-  if (renderer && scene && camera) {
-    renderer.render(scene, camera);
-  }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  initThree();
-  loadModel();
-  animate();
 });
+
