@@ -54,13 +54,13 @@ function loadModel() {
   loader.load(
     'model.glb',
     function (gltf) {
-      console.log("Model geladen!");
+      console.log("model geladen!");
       model = gltf.scene;
       scene.add(model);
     },
     function (xhr) {
       if (xhr.lengthComputable) {
-        console.log(`Model laden: ${(xhr.loaded / xhr.total * 100).toFixed(0)}%`);
+        console.log(`model laden: ${(xhr.loaded / xhr.total * 100).toFixed(0)}%`);
       }
     },
     function (error) {
