@@ -1,7 +1,6 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.154.0/build/three.module.js';
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.154.0/examples/jsm/loaders/GLTFLoader.js';
 
-
 let scene, camera, renderer, model;
 
 function showError(message) {
@@ -47,24 +46,23 @@ function onWindowResize() {
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
-// Alleen model laden, geen parameters
 function loadModel() {
   const loader = new GLTFLoader();
-  console.log("Bezig met laden van: model.glb");
+  console.log("Bezig met laden van: box.glb");
   loader.load(
-    'model.glb',
+    'box.glb',
     function (gltf) {
-      console.log("model geladen!");
+      console.log("box.glb geladen!");
       model = gltf.scene;
       scene.add(model);
     },
     function (xhr) {
       if (xhr.lengthComputable) {
-        console.log(`model laden: ${(xhr.loaded / xhr.total * 100).toFixed(0)}%`);
+        console.log(`box.glb laden: ${(xhr.loaded / xhr.total * 100).toFixed(0)}%`);
       }
     },
     function (error) {
-      showError("Fout bij laden van model.glb. Bestaat het bestand en is het een geldig glb-bestand?");
+      showError("Fout bij laden van box.glb. Bestaat het bestand en is het een geldig glb-bestand?");
       console.error(error);
     }
   );
@@ -77,7 +75,6 @@ function animate() {
   }
 }
 
-// Initialisatie zonder parameters
 document.addEventListener('DOMContentLoaded', () => {
   initThree();
   loadModel();
